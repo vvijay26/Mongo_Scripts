@@ -1,3 +1,12 @@
 # Mongo_Scripts
-MongoDB CRUD And Aggregation Javascripts 
-Dataset is from crunchbase and imdb on which aggregate/ crud queries are written
+#H1 MongoDB CRUD And Aggregation Javascripts 
+
+To practice these queries, download the following
+
+| Type.         | Data source   |
+| ------------- |:-------------:|
+| Aggregation   | crunchbase.com| 
+| Crud.         | imdb.com      |
+
+
+
