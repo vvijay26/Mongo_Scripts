@@ -171,3 +171,46 @@ db.movies.aggregate(
 )
 
 /*{ "_id": "John Wayne", "numFilms": 107, "average": 6.4 }*/
+
+/*Which alliance from air_alliances flies the most routes with either a Boeing 747 
+or an Airbus A380 (abbreviated 747 and 380 in air_routes)?*/
+db.air_alliances.aggregate([
+  {
+   $lookup:
+   {
+       from: "air_routes",
+       localField: "airlines",
+       foreignField: "airline.name",
+       as: "docs"
+   }
+  },
+  { 
+       $match : 
+         {
+          $or :[{"docs.airplane":{ $regex: /380/i }},{"docs.airplane":{ $regex: /747/i }}]
+         }
+  },
+     {
+       $unwind:"$docs"
+     },
+  { 
+       $match : 
+         {
+          $or :[{"docs.airplane":{ $regex: /380/i }},{"docs.airplane":{ $regex: /747/i }}]
+         }
+    },
+     {
+       $group:
+         {
+           _id: "$name",
+           sumRoutes: {$sum: 1}
+      }
+  }   
+ ]
+)
+
+/*Now that you have been introduced to $graphLookup, let's use it to solve an interesting need. 
+You are working for a travel agency and would like to find routes for a client! For this exercise, 
+we'll be using the air_airlines, air_alliances, and air_routes collections in the aggregations database.
+
+The air_airlines collection will use the following schema:*/
